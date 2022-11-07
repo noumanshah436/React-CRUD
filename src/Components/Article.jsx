@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Button } from "@mui/material";
-
+import { Link } from "react-router-dom";
 import { deleteArticle } from "../api/articles";
 
 const Article = ({ article, setReload }) => {
@@ -13,9 +13,9 @@ const Article = ({ article, setReload }) => {
       <Card.Body>
         <Card.Text>{article.body}</Card.Text>
 
-        <Button className="m-1" variant="contained" size="medium">
+        <Link to={`/edit/${article.id}`} className="m-1 btn btn-primary">
           Edit
-        </Button>
+        </Link>
 
         <Button
           className="m-1"

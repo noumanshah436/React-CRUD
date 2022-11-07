@@ -1,10 +1,21 @@
 import axios from "axios";
-const url = "http://localhost:3000/api/v1/articles";
 
 export const getArticles = async (setArticles) => {
+  const URL_GET_ARTICLES = "http://localhost:3000/api/v1/articles";
+
   try {
-    const res = await axios.get(url);
+    const res = await axios.get(URL_GET_ARTICLES);
     setArticles(res.data);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getArticle = async (id, setArticle) => {
+  const URL_GET_ARTICLE = `http://localhost:3000/api/v1/articles/${id}`;
+  try {
+    const res = await axios.get(URL_GET_ARTICLE);
+    setArticle(res.data);
   } catch (error) {
     console.log(error.message);
   }
