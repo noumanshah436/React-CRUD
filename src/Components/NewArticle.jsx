@@ -1,36 +1,15 @@
 import React, { useState } from "react";
-import { Typography, Button, TextField } from "@mui/material";
-import axios from "axios";
+import {  Button, TextField } from "@mui/material";
+import { createArticle } from "../api/articles";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewArticle = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [titleError, setTitleError] = useState(false);
   const [bodyError, setBodyError] = useState(false);
-
-  const createArticle = async () => {
-    const URL_CREATE_ARTICLE = "http://localhost:3000/api/v1/articles";
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("body", body);
-
-    // fetch(URL_CREATE_ARTICLE, {
-    //   method: "POST",
-    //   body: formData,
-    // }).then((result) => {
-    //   result.json().then((resp) => {
-    //     console.log(resp);
-    //   });
-    // });
-
-    try {
-      // const result = await axios.post(URL_CREATE_ARTICLE, formData );
-      const result = await axios.post(URL_CREATE_ARTICLE, { body, title });
-      console.log(result.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,22 +23,16 @@ const NewArticle = () => {
       setBodyError(true);
     }
     if (title && body) {
-      // console.log(title, body);
-      createArticle();
+      createArticle(title, body);
+      navigate("/");
     }
   };
 
+  console.log("NewArticle");
   return (
     <div className="container ">
       <div className="m-3">
-        <Typography
-          variant="h4"
-          color="textSecondary"
-          component="h2"
-          gutterBottom
-        >
-          Create New Article
-        </Typography>
+        <h1 className=" my-4">New Article</h1>
         <div className="my-3">
           <form noValidate autoComplete="off" onSubmit={handleSubmit}>
             <TextField
@@ -94,6 +67,8 @@ const NewArticle = () => {
               Submit
             </Button>
           </form>
+          <br />
+          <Link to="/">Back</Link>
         </div>
       </div>
     </div>

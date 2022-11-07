@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
-import { Button } from "@mui/material";
 import { getArticles, deleteArticle } from "../api/articles";
-
+import Article from "./Article";
+import { Link } from "react-router-dom";
 const Articles = () => {
   const [articles, setArticles] = useState([]);
   const [reload, setReload] = useState(false);
@@ -15,33 +14,26 @@ const Articles = () => {
   console.log("render Articles");
   return (
     <>
-      <div className="  ">
+      <div className="m-4  ">
+        <div className="d-flex my-4 justify-content-between align-items-center">
+          <h1 className=" ">My Articles</h1>
+          <Link to="/new_article" className="btn btn-primary ">
+            New Article
+          </Link>
+        </div>
+
         {articles.map((article) => {
           return (
-            <Card key={article.id} className="m-4 w-100">
-              <Card.Header className="p-3">
-                <b>{article.title}</b>
-              </Card.Header>
-              <Card.Body>
-                <Card.Text>{article.body}</Card.Text>
-
-                <Button className="m-1" variant="contained" size="medium">
-                  Edit
-                </Button>
-
-                <Button
-                  className="m-1"
-                  onClick={() => deleteArticle(article.id, setReload)}
-                  variant="contained"
-                  color="error"
-                  size="medium"
-                >
-                  Delete
-                </Button>
-              </Card.Body>
-            </Card>
+            <Article
+              key={article.id}
+              article={article}
+              setReload={setReload}
+              deleteArticle={deleteArticle}
+            />
           );
         })}
+
+        <br />
       </div>
     </>
   );
