@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getArticle } from "../api/articles";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { updateArticle } from "../api/articles";
 
 const Edit = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [article, setArticle] = useState({
     id: -1,
@@ -29,17 +31,17 @@ const Edit = () => {
   });
 
   const handler = (data) => {
-    console.log("data");
-    console.log(data);
+    updateArticle(id, data);
+    navigate("/");
   };
 
-  // const navigate = useNavigate();
 
   useEffect(() => {
     getArticle(id, setArticle);
   }, [id]);
 
   useEffect(() => {
+    // set default values
     reset({
       title: article.title,
       body: article.body,

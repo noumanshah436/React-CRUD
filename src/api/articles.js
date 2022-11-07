@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// index
 export const getArticles = async (setArticles) => {
   const URL_GET_ARTICLES = "http://localhost:3000/api/v1/articles";
 
@@ -11,6 +12,7 @@ export const getArticles = async (setArticles) => {
   }
 };
 
+// show
 export const getArticle = async (id, setArticle) => {
   const URL_GET_ARTICLE = `http://localhost:3000/api/v1/articles/${id}`;
   try {
@@ -21,6 +23,7 @@ export const getArticle = async (id, setArticle) => {
   }
 };
 
+// create
 export const createArticle = async (title, body) => {
   const URL_CREATE_ARTICLE = "http://localhost:3000/api/v1/articles";
   const formData = new FormData();
@@ -46,6 +49,7 @@ export const createArticle = async (title, body) => {
   }
 };
 
+// delete
 export const deleteArticle = async (id, setReload) => {
   const URL_DELETE_ARTICLE = `http://localhost:3000/api/v1/articles/${id}`;
   try {
@@ -56,3 +60,31 @@ export const deleteArticle = async (id, setReload) => {
     console.log(error.message);
   }
 };
+
+
+// put
+export const updateArticle = async (id, updated_attr) => {
+  try {
+    const { data } = await axios({
+      method: "put",
+      url: `http://localhost:3000/api/v1/articles/${id}`,
+      data: { ...updated_attr },
+    });
+    console.log(data);
+  } catch (error) {
+    if (error.response.status === 404) {
+      console.log("Resource not found!");
+    } else {
+      console.log(error.message);
+    }
+  }
+};
+
+
+
+// axios put:
+// https://stackabuse.com/how-to-make-put-http-request-with-axios/
+
+
+// put params:
+// Parameters: {"title"=>"Nomi Art", "body"=>"Nomi Art", "id"=>"80", "article"=>{"title"=>"Nomi Art", "body"=>"Nomi Art"}}
